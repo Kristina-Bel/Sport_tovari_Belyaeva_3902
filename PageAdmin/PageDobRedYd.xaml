@@ -1,0 +1,46 @@
+﻿<Page x:Class="Sport_tovari_Belyaeva_3902.PageAdmin.PageDobRedYd"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Sport_tovari_Belyaeva_3902.PageAdmin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+     Title="Изменение данных о товаре" IsVisibleChanged="Page_IsVisibleChanged_1" >
+
+
+    <Grid>
+        <DataGrid x:Name="DGridSport" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,262">
+            <DataGrid.Columns>
+
+                <DataGridTemplateColumn Header="Редактировать" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" x:Name="BtnEdit" Click="BtnEdit_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Артикул" Binding="{Binding artikul}" Width="*"/>
+                <DataGridTextColumn Header="Имя товара" Binding="{Binding name}" Width="*"/>
+                <DataGridTextColumn Header="Эд. измеренеия" Binding="{Binding edizm}" Width="*"/>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding stoimost}" Width="*"/>
+                <DataGridTextColumn Header="Макс. скидка" Binding="{Binding maxsk}" Width="*"/>
+                <DataGridTextColumn Header="Производитель" Binding="{Binding proizvoditel}" Width="*"/>
+
+                <DataGridTextColumn Header="Поставщики" Binding="{Binding Postavchik.Postavchik1}" Width="*"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding kategorya.kategorya1}" Width="*"/>
+                
+                <DataGridTextColumn Header="Действ. скидка" Binding="{Binding DeistvSkidka}" Width="*"/>
+                <DataGridTextColumn Header="Количество на складе" Binding="{Binding kolvonaskl}" Width="*"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding opisanie}" Width="*"/>
+                <DataGridTextColumn Header="Изображение" Binding="{Binding image}" Width="*"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="back" Content="Назад" HorizontalAlignment="Left" Margin="690,239,0,0" VerticalAlignment="Top" Height="32" Width="82" Background="#FFED7979" FontSize="15" FontFamily="Comic Sans MS" Click="back_Click"/>
+        <Grid Margin="28,44,28,156"/>
+        <Button x:Name="BtnAdd" Click="BtnAdd_Click" Content="Добавить" HorizontalAlignment="Left" Margin="10,225,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS" FontSize="20" Height="46" Width="103" Background="#FF498C51"/>
+        <Button x:Name="BtnDelete" Content="Удалить" HorizontalAlignment="Left" Margin="158,225,0,0" VerticalAlignment="Top" Height="46" Width="104" FontFamily="Comic Sans MS" FontSize="20" Background="#FFF5D977" Click="BtnDelete_Click"/>
+
+    </Grid>
+</Page>

@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище sporttovarModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="kategorya">
+          <Key>
+            <PropertyRef Name="idkategorya" />
+          </Key>
+          <Property Name="idkategorya" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kategorya" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Postavchik">
+          <Key>
+            <PropertyRef Name="idPostavchik" />
+          </Key>
+          <Property Name="idPostavchik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Postavchik" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="punkt">
+          <Key>
+            <PropertyRef Name="idPunkt" />
+          </Key>
+          <Property Name="idPunkt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="punkt" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="idrole" />
+          </Key>
+          <Property Name="idrole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="idStatus" />
+          </Key>
+          <Property Name="idStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tovar">
+          <Key>
+            <PropertyRef Name="idtovar" />
+          </Key>
+          <Property Name="idtovar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="artikul" Type="nvarchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="edizm" Type="nvarchar" MaxLength="50" />
+          <Property Name="stoimost" Type="int" />
+          <Property Name="maxsk" Type="int" />
+          <Property Name="proizvoditel" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDpostavchil" Type="int" />
+          <Property Name="IDkategorya" Type="int" />
+          <Property Name="DeistvSkidka" Type="int" />
+          <Property Name="kolvonaskl" Type="int" />
+          <Property Name="opisanie" Type="nvarchar(max)" />
+          <Property Name="image" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDrole" Type="int" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="zakaz">
+          <Key>
+            <PropertyRef Name="idzakaz" />
+          </Key>
+          <Property Name="idzakaz" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomerz" Type="int" />
+          <Property Name="sostavz" Type="nvarchar" MaxLength="50" />
+          <Property Name="dataz" Type="date" />
+          <Property Name="datapost" Type="date" />
+          <Property Name="IDpunkt" Type="int" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="50" />
+          <Property Name="kodpol" Type="int" />
+          <Property Name="IDstatus" Type="int" />
+        </EntityType>
+        <Association Name="FK_tovar_kategorya">
+          <End Role="kategorya" Type="Self.kategorya" Multiplicity="0..1" />
+          <End Role="tovar" Type="Self.tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategorya">
+              <PropertyRef Name="idkategorya" />
+            </Principal>
+            <Dependent Role="tovar">
+              <PropertyRef Name="IDkategorya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tovar_Postavchik">
+          <End Role="Postavchik" Type="Self.Postavchik" Multiplicity="0..1" />
+          <End Role="tovar" Type="Self.tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postavchik">
+              <PropertyRef Name="idPostavchik" />
+            </Principal>
+            <Dependent Role="tovar">
+              <PropertyRef Name="IDpostavchil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_role">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IDrole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zakaz_punkt">
+          <End Role="punkt" Type="Self.punkt" Multiplicity="0..1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="punkt">
+              <PropertyRef Name="idPunkt" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="IDpunkt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zakaz_status">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="idStatus" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="IDstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище sporttovarModelContainer">
+          <EntitySet Name="kategorya" EntityType="Self.kategorya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postavchik" EntityType="Self.Postavchik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="punkt" EntityType="Self.punkt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tovar" EntityType="Self.tovar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zakaz" EntityType="Self.zakaz" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tovar_kategorya" Association="Self.FK_tovar_kategorya">
+            <End Role="kategorya" EntitySet="kategorya" />
+            <End Role="tovar" EntitySet="tovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tovar_Postavchik" Association="Self.FK_tovar_Postavchik">
+            <End Role="Postavchik" EntitySet="Postavchik" />
+            <End Role="tovar" EntitySet="tovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_role" Association="Self.FK_User_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zakaz_punkt" Association="Self.FK_zakaz_punkt">
+            <End Role="punkt" EntitySet="punkt" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zakaz_status" Association="Self.FK_zakaz_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sporttovarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="kategorya">
+          <Key>
+            <PropertyRef Name="idkategorya" />
+          </Key>
+          <Property Name="idkategorya" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kategorya1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tovar" Relationship="Self.FK_tovar_kategorya" FromRole="kategorya" ToRole="tovar" />
+        </EntityType>
+        <EntityType Name="Postavchik">
+          <Key>
+            <PropertyRef Name="idPostavchik" />
+          </Key>
+          <Property Name="idPostavchik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Postavchik1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tovar" Relationship="Self.FK_tovar_Postavchik" FromRole="Postavchik" ToRole="tovar" />
+        </EntityType>
+        <EntityType Name="punkt">
+          <Key>
+            <PropertyRef Name="idPunkt" />
+          </Key>
+          <Property Name="idPunkt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="punkt1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="zakaz" Relationship="Self.FK_zakaz_punkt" FromRole="punkt" ToRole="zakaz" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="idrole" />
+          </Key>
+          <Property Name="idrole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_role" FromRole="role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="idStatus" />
+          </Key>
+          <Property Name="idStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="zakaz" Relationship="Self.FK_zakaz_status" FromRole="status" ToRole="zakaz" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tovar">
+          <Key>
+            <PropertyRef Name="idtovar" />
+          </Key>
+          <Property Name="idtovar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="artikul" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="edizm" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stoimost" Type="Int32" />
+          <Property Name="maxsk" Type="Int32" />
+          <Property Name="proizvoditel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDpostavchil" Type="Int32" />
+          <Property Name="IDkategorya" Type="Int32" />
+          <Property Name="DeistvSkidka" Type="Int32" />
+          <Property Name="kolvonaskl" Type="Int32" />
+          <Property Name="opisanie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="kategorya" Relationship="Self.FK_tovar_kategorya" FromRole="tovar" ToRole="kategorya" />
+          <NavigationProperty Name="Postavchik" Relationship="Self.FK_tovar_Postavchik" FromRole="tovar" ToRole="Postavchik" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDrole" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="role" Relationship="Self.FK_User_role" FromRole="User" ToRole="role" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="zakaz">
+          <Key>
+            <PropertyRef Name="idzakaz" />
+          </Key>
+          <Property Name="idzakaz" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomerz" Type="Int32" />
+          <Property Name="sostavz" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dataz" Type="DateTime" Precision="0" />
+          <Property Name="datapost" Type="DateTime" Precision="0" />
+          <Property Name="IDpunkt" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kodpol" Type="Int32" />
+          <Property Name="IDstatus" Type="Int32" />
+          <NavigationProperty Name="punkt" Relationship="Self.FK_zakaz_punkt" FromRole="zakaz" ToRole="punkt" />
+          <NavigationProperty Name="status" Relationship="Self.FK_zakaz_status" FromRole="zakaz" ToRole="status" />
+        </EntityType>
+        <Association Name="FK_tovar_kategorya">
+          <End Role="kategorya" Type="Self.kategorya" Multiplicity="0..1" />
+          <End Role="tovar" Type="Self.tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategorya">
+              <PropertyRef Name="idkategorya" />
+            </Principal>
+            <Dependent Role="tovar">
+              <PropertyRef Name="IDkategorya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tovar_Postavchik">
+          <End Role="Postavchik" Type="Self.Postavchik" Multiplicity="0..1" />
+          <End Role="tovar" Type="Self.tovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postavchik">
+              <PropertyRef Name="idPostavchik" />
+            </Principal>
+            <Dependent Role="tovar">
+              <PropertyRef Name="IDpostavchil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zakaz_punkt">
+          <End Role="punkt" Type="Self.punkt" Multiplicity="0..1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="punkt">
+              <PropertyRef Name="idPunkt" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="IDpunkt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_role">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IDrole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_zakaz_status">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="idStatus" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="IDstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sporttovarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="kategorya" EntityType="Self.kategorya" />
+          <EntitySet Name="Postavchik" EntityType="Self.Postavchik" />
+          <EntitySet Name="punkt" EntityType="Self.punkt" />
+          <EntitySet Name="role" EntityType="Self.role" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tovar" EntityType="Self.tovar" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="zakaz" EntityType="Self.zakaz" />
+          <AssociationSet Name="FK_tovar_kategorya" Association="Self.FK_tovar_kategorya">
+            <End Role="kategorya" EntitySet="kategorya" />
+            <End Role="tovar" EntitySet="tovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tovar_Postavchik" Association="Self.FK_tovar_Postavchik">
+            <End Role="Postavchik" EntitySet="Postavchik" />
+            <End Role="tovar" EntitySet="tovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zakaz_punkt" Association="Self.FK_zakaz_punkt">
+            <End Role="punkt" EntitySet="punkt" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_role" Association="Self.FK_User_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_zakaz_status" Association="Self.FK_zakaz_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище sporttovarModelContainer" CdmEntityContainer="sporttovarEntities">
+          <EntitySetMapping Name="kategorya">
+            <EntityTypeMapping TypeName="sporttovarModel.kategorya">
+              <MappingFragment StoreEntitySet="kategorya">
+                <ScalarProperty Name="idkategorya" ColumnName="idkategorya" />
+                <ScalarProperty Name="kategorya1" ColumnName="kategorya" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postavchik">
+            <EntityTypeMapping TypeName="sporttovarModel.Postavchik">
+              <MappingFragment StoreEntitySet="Postavchik">
+                <ScalarProperty Name="idPostavchik" ColumnName="idPostavchik" />
+                <ScalarProperty Name="Postavchik1" ColumnName="Postavchik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="punkt">
+            <EntityTypeMapping TypeName="sporttovarModel.punkt">
+              <MappingFragment StoreEntitySet="punkt">
+                <ScalarProperty Name="idPunkt" ColumnName="idPunkt" />
+                <ScalarProperty Name="punkt1" ColumnName="punkt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="sporttovarModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="idrole" ColumnName="idrole" />
+                <ScalarProperty Name="role1" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="sporttovarModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="sporttovarModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tovar">
+            <EntityTypeMapping TypeName="sporttovarModel.tovar">
+              <MappingFragment StoreEntitySet="tovar">
+                <ScalarProperty Name="idtovar" ColumnName="idtovar" />
+                <ScalarProperty Name="artikul" ColumnName="artikul" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="edizm" ColumnName="edizm" />
+                <ScalarProperty Name="stoimost" ColumnName="stoimost" />
+                <ScalarProperty Name="maxsk" ColumnName="maxsk" />
+                <ScalarProperty Name="proizvoditel" ColumnName="proizvoditel" />
+                <ScalarProperty Name="IDpostavchil" ColumnName="IDpostavchil" />
+                <ScalarProperty Name="IDkategorya" ColumnName="IDkategorya" />
+                <ScalarProperty Name="DeistvSkidka" ColumnName="DeistvSkidka" />
+                <ScalarProperty Name="kolvonaskl" ColumnName="kolvonaskl" />
+                <ScalarProperty Name="opisanie" ColumnName="opisanie" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="sporttovarModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="IDrole" ColumnName="IDrole" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zakaz">
+            <EntityTypeMapping TypeName="sporttovarModel.zakaz">
+              <MappingFragment StoreEntitySet="zakaz">
+                <ScalarProperty Name="idzakaz" ColumnName="idzakaz" />
+                <ScalarProperty Name="nomerz" ColumnName="nomerz" />
+                <ScalarProperty Name="sostavz" ColumnName="sostavz" />
+                <ScalarProperty Name="dataz" ColumnName="dataz" />
+                <ScalarProperty Name="datapost" ColumnName="datapost" />
+                <ScalarProperty Name="IDpunkt" ColumnName="IDpunkt" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="kodpol" ColumnName="kodpol" />
+                <ScalarProperty Name="IDstatus" ColumnName="IDstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
